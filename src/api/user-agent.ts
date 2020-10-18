@@ -491,30 +491,6 @@ export class UserAgent {
     // to send messages will be futile. But none of these disposal methods check
     // if that's is the case and it would be easy for them to do so at this point.
 
-    // Dispose of Registerers
-    this.logger.log(`Dispose of registerers`);
-    for (const id in registerers) {
-      if (registerers[id]) {
-        await registerers[id].dispose().catch((error: Error) => {
-          this.logger.error(error.message);
-          delete this._registerers[id];
-          throw error;
-        });
-      }
-    }
-
-    // Dispose of Sessions
-    this.logger.log(`Dispose of sessions`);
-    for (const id in sessions) {
-      if (sessions[id]) {
-        await sessions[id].dispose().catch((error: Error) => {
-          this.logger.error(error.message);
-          delete this._sessions[id];
-          throw error;
-        });
-      }
-    }
-
     // Dispose of Subscriptions
     this.logger.log(`Dispose of subscriptions`);
     for (const id in subscriptions) {
@@ -534,6 +510,30 @@ export class UserAgent {
         await publishers[id].dispose().catch((error: Error) => {
           this.logger.error(error.message);
           delete this._publishers[id];
+          throw error;
+        });
+      }
+    }
+
+    // Dispose of Sessions
+    this.logger.log(`Dispose of sessions`);
+    for (const id in sessions) {
+      if (sessions[id]) {
+        await sessions[id].dispose().catch((error: Error) => {
+          this.logger.error(error.message);
+          delete this._sessions[id];
+          throw error;
+        });
+      }
+    }
+
+    // Dispose of Registerers
+    this.logger.log(`Dispose of registerers`);
+    for (const id in registerers) {
+      if (registerers[id]) {
+        await registerers[id].dispose().catch((error: Error) => {
+          this.logger.error(error.message);
+          delete this._registerers[id];
           throw error;
         });
       }
